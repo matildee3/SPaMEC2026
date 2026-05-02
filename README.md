@@ -106,8 +106,8 @@ Qui vengono proposte due demo che sono state costruite con approcci opposti: una
 ### Demo A — Esplorazione statica interattiva
 
 Due versioni della stessa interfaccia, una con proiezione **PCA** e una con **UMAP**:
-![demoa1](img/demoa1)
-![demoa2](img/demoa2)
+![demoa_pca](img/demo_pca.png)
+![demo_umap](img/demo_umap.png)
 
 ```bash
 python demo_pca.py  --checkpoint ./checkpoints/ae_final.pt --data_dir ./data_processed
@@ -128,7 +128,7 @@ L'interfaccia permette di scegliere un punto nello spazio latente in due modi: i
 
 ### Demo B — Navigazione dinamica in tempo reale con il mouse
 
-![demob](img/demob)
+![demo_latent](img/demo_latent.png)
 
 Questa demo richiede uno step preliminare: il **pre-rendering** della griglia. Il decoder genera in anticipo un suono per ogni cella di una griglia N×N che copre lo spazio UMAP, e li salva su disco.
 
