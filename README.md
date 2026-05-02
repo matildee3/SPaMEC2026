@@ -1,18 +1,14 @@
 # Small AI — Latent Space Navigator
 
-> *Un autoencoder convoluzionale addestrato localmente sul proprio corpus sonoro,  
-> con uno spazio latente navigabile come strumento di esplorazione ed esecuzione.*
-
-Questo progetto nasce dalla convinzione che i modelli AI di piccole dimensioni — addestrabili su un laptop, a partire dal proprio materiale sonoro — costituiscano una forma di **liuteria digitale**: strumenti situati, autoriali, politicamente significativi. Non versioni ridotte dei big model, ma oggetti qualitativamente diversi, più vicini all'artigianato che all'industria.
-
-Il modello impara a comprimere ogni suono in un vettore di 16 numeri (lo *spazio latente*), e a ricostruirlo da quella rappresentazione. Lo spazio latente risultante è una mappa timbrica del tuo materiale: suoni simili si raggruppano, le zone intermedie tra cluster sono zone di ibridazione sonora. Quella mappa è lo strumento.
+Codice sviluppato per il paper *Small AI: modelli locali come pratica di liuteria digitale*. Il repository è disponibile pubblicamente così che chiunque possa addestrare il proprio modello a partire dal proprio materiale sonoro.
+Un autoencoder convoluzionale leggero (~500k parametri) addestrato localmente su un corpus sonoro personale. L'encoder comprime ogni frammento audio in un vettore di 16 numeri (lo spazio latente) e il decoder lo ricostruisce. Lo spazio latente risultante è una mappa timbrica del materiale di training: suoni simili si raggruppano, le zone intermedie tra cluster corrispondono a ibridazioni sonore non presenti nel corpus originale. Quella mappa è navigabile e usabile come strumento di esplorazione ed esecuzione.
 
 ---
 
 ## Requisiti
 
 ```bash
-pip install torch torchaudio librosa soundfile numpy umap-learn scikit-learn \
+pip install torch torchaudio librosa soundfile numpy umap-learn scikit-learn 
             gradio aiohttp aiofiles python-osc matplotlib pathlib
 ```
 
