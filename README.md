@@ -8,11 +8,10 @@ Un autoencoder convoluzionale leggero (~500k parametri) addestrato localmente su
 ## Requisiti
 
 ```bash
-pip install torch torchaudio librosa soundfile numpy umap-learn scikit-learn 
-            gradio aiohttp aiofiles python-osc matplotlib pathlib
+pip install -r requirements.txt
 ```
 
-Python ≥ 3.10 raccomandato. Per la demo OSC con Max/MSP: `pip install python-osc`.
+
 
 ---
 
