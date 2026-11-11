@@ -1,0 +1,13 @@
+torch 
+torchaudio 
+librosa 
+soundfile 
+numpy 
+umap-learn 
+scikit-learn 
+gradio 
+aiohttp 
+aiofiles 
+python-osc 
+matplotlib 
+pathlib
