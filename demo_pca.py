@@ -285,7 +285,8 @@ def build_ui():
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint",  default="./checkpoints/ae_final.pt")
-    parser.add_argument("--data_dir",    default="./data/nsynth-valid")
+    parser.add_argument("--data_dir",    default="./data_processed")
+    
     parser.add_argument("--max_samples", type=int, default=500)
     parser.add_argument("--port",        type=int, default=7860)
     parser.add_argument("--share",       action="store_true")
