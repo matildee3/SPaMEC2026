@@ -23,6 +23,7 @@ CONFIG = {
     "data_dir":       "./data_processed",
     "max_samples":    None,
     "batch_size":     32,
+    "device":         "cpu",
     "latent_dim":     16,
     "noise_std":      0.1,
     "epochs":         200,
@@ -40,17 +41,21 @@ TRACK_PALETTE = [
 ]
 
 
-def get_device():
-    if torch.cuda.is_available():
-        d = torch.device("cuda")
+def get_device(device_name="cpu"):
+    if device_name == "cpu":
+        print("CPU")
+    elif device_name == "cuda":
+        if not torch.cuda.is_available():
+            raise RuntimeError("CUDA richiesto ma non disponibile in questa installazione di PyTorch.")
         print(f"GPU: {torch.cuda.get_device_name(0)}")
-    elif torch.backends.mps.is_available():
-        d = torch.device("mps")
+    elif device_name == "mps":
+        mps = getattr(torch.backends, "mps", None)
+        if mps is None or not mps.is_available():
+            raise RuntimeError("MPS richiesto ma non disponibile in questa installazione di PyTorch.")
         print("Apple Silicon (MPS)")
     else:
-        d = torch.device("cpu")
-        print("CPU")
-    return d
+        raise ValueError(f"Device non supportato: {device_name!r}. Scegli cpu, cuda oppure mps.")
+    return torch.device(device_name)
 
 
 def plot_latent_pca_umap(model, dataset, device, epoch, save_dir):
@@ -138,7 +143,7 @@ def plot_latent_pca_umap(model, dataset, device, epoch, save_dir):
 
 
 def train(config=CONFIG):
-    device = get_device()
+    device = get_device(config["device"])
     os.makedirs(config["checkpoint_dir"], exist_ok=True)
     plots_dir = os.path.join(config["checkpoint_dir"], "plots")
 
@@ -242,6 +247,8 @@ if __name__ == "__main__":
     parser.add_argument("--max_samples", type=int, default=CONFIG["max_samples"])
     parser.add_argument("--epochs",      type=int, default=CONFIG["epochs"])
     parser.add_argument("--batch_size",  type=int, default=CONFIG["batch_size"])
+    parser.add_argument("--device",      choices=("cpu", "cuda", "mps"), default=CONFIG["device"],
+                        help="Dispositivo di calcolo (default: cpu, scelta più compatibile)")
     parser.add_argument("--latent_dim",  type=int, default=CONFIG["latent_dim"])
     parser.add_argument("--noise_std",   type=float, default=CONFIG["noise_std"])
     args = parser.parse_args()
