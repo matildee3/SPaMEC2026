@@ -8,10 +8,11 @@ Un autoencoder convoluzionale leggero (~500k parametri) addestrato localmente su
 ## Requisiti
 
 ```bash
-pip install -r requirements.txt
+pip install torch torchaudio librosa soundfile numpy umap-learn scikit-learn 
+            gradio aiohttp aiofiles python-osc matplotlib
 ```
 
-
+Python ≥ 3.10 raccomandato. Per la demo OSC con Max/MSP: `pip install python-osc`.
 
 ---
 
@@ -79,6 +80,17 @@ Si usa un autoencoder puro invece di un VAE perché su dataset piccoli il VAE te
 python train.py --data_dir ./data_processed --epochs 200
 ```
 
+Per compatibilità, il training usa la **CPU per default**. Puoi selezionare
+un acceleratore supportato da PyTorch con:
+
+```bash
+python train.py --data_dir ./data_processed --epochs 200 --device cuda
+python train.py --data_dir ./data_processed --epochs 200 --device mps
+```
+
+`cuda` richiede una GPU NVIDIA compatibile; `mps` richiede Apple Silicon.
+Se il dispositivo scelto non è disponibile, usa la CPU omettendo `--device`.
+
 I checkpoint vengono salvati in `checkpoints/` ogni 10 epoch. Il modello finale è `checkpoints/ae_final.pt`. Durante il training vengono generati automaticamente plot PCA + UMAP dello spazio latente ogni 5 epoch in `checkpoints/plots/`.
 
 ### Parametri utili
@@ -112,6 +124,9 @@ Due versioni della stessa interfaccia, una con proiezione **PCA** e una con **UM
 python demo_pca.py  --checkpoint ./checkpoints/ae_final.pt --data_dir ./data_processed
 python demo_umap.py --checkpoint ./checkpoints/ae_final.pt --data_dir ./data_processed
 ```
+
+La proiezione UMAP usa `n_neighbors=20` e `min_dist=0.5`; gli stessi parametri
+sono usati da `demo_mouse`.
 
 Apri `http://localhost:7860` nel browser.
 
@@ -152,6 +167,9 @@ python demo_mouse.py --checkpoint ./checkpoints/ae_final.pt \
                      --data_dir   ./data_processed \
                      --grid_dir   ./grid_audio
 ```
+
+Se cambi checkpoint o parametri UMAP, rigenera il pre-rendering prima di avviare
+`demo_mouse`, così la mappa e i suoni restano allineati.
 
 Apri `http://localhost:8080` nel browser. Muovendo il mouse sulla mappa UMAP il suono cambia in tempo reale — ogni cella della griglia corrisponde a un suono pre-renderizzato che viene caricato con crossfade automatico. Il bottone `SOUND ON/OFF` permette di attivare e disattivare il flusso audio. L'uscita dal canvas ferma il suono.
 
