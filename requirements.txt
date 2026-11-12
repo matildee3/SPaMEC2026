@@ -10,4 +10,3 @@ aiohttp
 aiofiles 
 python-osc 
 matplotlib 
-pathlib
