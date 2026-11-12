@@ -71,7 +71,7 @@ def setup(checkpoint_path, data_dir):
 
     print("Calcolo UMAP...")
     reducer = umap.UMAP(
-        n_components=2, n_neighbors=15, min_dist=0.2,
+        n_components=2, n_neighbors=20, min_dist=0.5,
         metric='euclidean', random_state=42, low_memory=True,
     )
     z_umap = reducer.fit_transform(all_z)
