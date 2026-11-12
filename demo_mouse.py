@@ -7,7 +7,7 @@ Muovi il mouse sulla mappa → il suono cambia in tempo reale.
 Uso:
   python demo_mouse.py --checkpoint ./checkpoints/ae_final.pt \
                        --data_dir   ./data_processed \
-                       --grid_dir   ./grid_128iter
+                       --grid_dir   ./grid_audio
 
 """
 
@@ -69,7 +69,7 @@ def setup(checkpoint_path, data_dir, grid_dir):
 
     print("Calcolo UMAP...")
     reducer = umap.UMAP(
-        n_components=2, n_neighbors=15, min_dist=0.2,
+        n_components=2, n_neighbors=20, min_dist=0.5,
         metric='euclidean', random_state=42, low_memory=True,
     )
     reducer.fit(ALL_Z)
@@ -486,7 +486,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--checkpoint", default="./checkpoints/ae_final.pt")
     parser.add_argument("--data_dir",   default="./data_processed")
-    parser.add_argument("--grid_dir",   default="./grid_128iter")
+    parser.add_argument("--grid_dir",   default="./grid_audio")
     parser.add_argument("--port",       type=int, default=8080)
     args = parser.parse_args()
 
